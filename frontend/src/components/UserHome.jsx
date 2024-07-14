@@ -2,6 +2,7 @@ import { Home } from "@mui/icons-material";
 import React, { useEffect, useState } from "react";
 import HomeBook from "./HomeBook";
 import axios from "axios";
+import MyBooks from "./myBooks";
 
 const UserHome = () => {
   const [books, setBooks] = useState([{}]);
@@ -14,6 +15,7 @@ const UserHome = () => {
         .then((res) => {
           setBooks(res.data.items[0].volumeInfo);
           console.log(res);
+          console.log(res.data.items[0].volumeInfo);
         })
         .catch(() => {
           console.log("error");
@@ -56,7 +58,7 @@ const UserHome = () => {
               <div className=" border-black border-2  " />
             </div>
             {books.title && (
-              <HomeBook
+              <MyBooks
                 title={books.title}
                 image={books.imageLinks.smallThumbnail}
                 info={books.description}
@@ -73,7 +75,26 @@ const UserHome = () => {
             </div>
           </div>
         </div>
+  console.log(books);
+
+  return (
+    <div>
+      <div>
+        <h1 className="text-2xl">User Home Page</h1>
+        <div className=" pl-2">
+          <h1 className=" text text-3xl py-2">My Books</h1>
+          <div className=" border-black border-2 w-1/2 " />
+        </div>
+        {books.title && (
+          <HomeBook
+            title={books.title}
+            image={books.imageLinks.smallThumbnail}
+            // description={books.volumeInfo.description}
+          />
+        )}
       </div>
+    </div>
+    </div>
     </div>
   );
 };
