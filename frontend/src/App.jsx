@@ -10,7 +10,7 @@ import Search from './components/Search'
 import HomeBook from './components/HomeBook'
 import Signup from './components/Signup'
 import Book from './components/Book'
-
+import AdminDashboard from './components/AdminDashboard'
 
 function App() {
 
@@ -26,6 +26,7 @@ function App() {
       <Route path="/search" element={<Search />}/>
       <Route path ="/signup" element={<Signup />} />
       <Route path="/book/:id" element={<Book />} />
+      <Route path="/admin" element={<AdminDashboard/>} />
     </Routes>
     </BrowserRouter>
     </>
