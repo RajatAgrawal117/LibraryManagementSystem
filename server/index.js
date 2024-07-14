@@ -24,10 +24,12 @@ database.connectDB();
 //Routes
 const userRoutes = require("./routes/user");
 const borrowRoutes = require("./routes/Borrow");
+const getUserRoutes = require("./routes/getUser")
+const bookRoutes = require("./routes/book")
 app.use("/api/auth", userRoutes);
 app.use("/api", borrowRoutes);
-const getUserRoutes = require("./routes/getUser")
 app.use('/api', getUserRoutes);
+app.use('/api', bookRoutes);
 
 // Start the server
 app.listen(port, () => {
