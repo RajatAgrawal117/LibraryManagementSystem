@@ -20,9 +20,7 @@ const Book = () => {
         toast.error("Please Login to borrow a book")
     }
 
-    await axios.post("http://localhost:4000/api/borrow", {
-        withCredentials: true,
-    }).then((res) => {
+    await axios.post("http://localhost:4000/api/borrow").then((res) => {
         toast.success("Book borrowed successfully")
         console.log(res);
     }).catch((err) => {

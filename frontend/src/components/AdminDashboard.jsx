@@ -17,7 +17,7 @@ const AdminDashboard = () => {
           headers: {
             'Authorization': `Bearer ${token}`
           }
-        },      {  withCredentials: true,}
+        }   
       );
         
         console.log(response);
