@@ -81,7 +81,7 @@ exports.login = async (req, res) => {
 
     // check if user exists in db
     // Find user with provided email
-    const user = await User.findOne({ username });
+    const user = await User.findOne({ username }).populate("borrowed_books")
     // If user not found with provided email
     if (!user) {
       // Return 401 Unauthorized status code with error message
@@ -97,7 +97,7 @@ exports.login = async (req, res) => {
       const token = jwt.sign(
         { email: user.email, id: user._id, role: user.role },
         process.env.JWT_SECRET,
-        {
+        { 
           expiresIn: "24h",
         }
       )
