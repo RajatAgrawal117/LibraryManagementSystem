@@ -26,7 +26,8 @@ const userRoutes = require("./routes/user");
 const borrowRoutes = require("./routes/Borrow");
 app.use("/api/auth", userRoutes);
 app.use("/api", borrowRoutes);
-
+const getUserRoutes = require("./routes/getUser")
+app.use('/api', getUserRoutes);
 
 // Start the server
 app.listen(port, () => {
