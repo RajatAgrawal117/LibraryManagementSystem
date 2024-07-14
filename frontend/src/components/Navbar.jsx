@@ -9,6 +9,7 @@ const isLoggedIn = !!localStorage.getItem('token');
 const Navbar = () => {
   const handleLogout = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('borrowed_books');
     window.location.href = '/';
   };
   
