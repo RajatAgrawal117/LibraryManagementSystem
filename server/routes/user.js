@@ -4,6 +4,7 @@ const router = express.Router()
 
 const { login, signup } = require("../controllers/Auth")
 
+const {auth} = require("../middleware/auth")
 
 // Authentication routes
 router.post("/login" , login) ;
