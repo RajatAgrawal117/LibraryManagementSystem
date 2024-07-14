@@ -23,7 +23,9 @@ database.connectDB();
 
 //Routes
 const userRoutes = require("./routes/user");
+const borrowRoutes = require("./routes/Borrow");
 app.use("/api/auth", userRoutes);
+app.use("/api", borrowRoutes);
 
 
 // Start the server
