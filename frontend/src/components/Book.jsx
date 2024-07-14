@@ -33,9 +33,9 @@ const Book = () => {
 
   useEffect(() => {
         const fetchBooks = async () => {
-        await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${id}`).then((data)=>{
+        await axios.get(`https://www.googleapis.com/books/v1/volumes/${id}`).then((data)=>{
             console.log(data)
-            setBook(data.data.items[0].volumeInfo)
+            setBook(data.data.volumeInfo)
         }).catch((err)=>{
             console.log(err)
 

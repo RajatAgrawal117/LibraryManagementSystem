@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './Search.css';
+import { Link } from 'react-router-dom';
 
 const Search = () => {
   const [query, setQuery] = useState('');
@@ -31,6 +32,8 @@ const Search = () => {
       </div>
       <div className="book-results">
         {books.map((book) => (
+          <Link to={`/book/${book.id}`}  >
+              {console.log(book)}
           <div key={book.id} className="book-item">
             <img src={book.volumeInfo.imageLinks?.thumbnail} alt={book.volumeInfo.title} />
             <div className="book-details">
@@ -39,6 +42,7 @@ const Search = () => {
               <p>{book.saleInfo.isEbook ? 'Available' : 'Not Available'}</p>
             </div>
           </div>
+          </Link>
         ))}
       </div>
     </div>
