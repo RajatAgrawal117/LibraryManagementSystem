@@ -3,19 +3,22 @@ import React, { useEffect, useState } from "react";
 import HomeBook from "./HomeBook";
 import axios from "axios";
 import MyBooks from "./myBooks";
+import { useSelector } from "react-redux";
+import {getuser} from "../store/userSlice"
 
 const UserHome = () => {
   const [books, setBooks] = useState([{}]);
   const [search, setSearch] = useState("");
   const [searchbooks, setSearchBooks] = useState([{}]);
-  useEffect(() => {
+  const user = useSelector((state) => state.currentUser);
+    useEffect(() => {
     const fetchBooks = async () => {
       await axios
         .get("https://www.googleapis.com/books/v1/volumes?q=isbn:9781787123427")
         .then((res) => {
           setBooks(res.data.items[0].volumeInfo);
-          console.log(res);
-          console.log(res.data.items[0].volumeInfo);
+          // console.log(res);
+          // console.log(res.data.items[0].volumeInfo);
         })
         .catch(() => {
           console.log("error");
@@ -24,7 +27,9 @@ const UserHome = () => {
     fetchBooks();
   }, []);
 
-  //   console.log(books);
+  // const  currentUser  = useSelector((state) => state.currentUser);
+    // console.log(currentUser);
+    console.log(user);
 
   useEffect(() => {}, [search, books]);
 
@@ -36,7 +41,7 @@ const UserHome = () => {
   return (
     <div className="">
       <div className=" pl-4">
-        <h1 className="text-2xl">User Home Page</h1>
+        <h1 className="text-2xl font-bold ">User Home Page</h1>
         <div className=" flex">
           <div>
             <div className=" pr-6 relative ">
