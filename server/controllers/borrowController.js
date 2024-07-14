@@ -11,6 +11,7 @@ const borrowBook = async (req, res) => {
 
     // Check if the book is already available in the database
     let existingBook = await Book.findOne({ isbn: bookData.industryIdentifiers[0].identifier });
+    console.log( "existing book " ,existingBook);
 
     if (existingBook) { 
         if (existingBook.availableQuantity > 0) {
@@ -21,7 +22,8 @@ const borrowBook = async (req, res) => {
             await existingBook.save();
             
             const user = await User.findById(userId);
-            user.account.borrowed_books.push(existingBook._id);
+            console.log("user", user);
+            user.no_borrowed_books.push(existingBook._id);
             await user.save();
             
             res.status(201).send("Book borrowed successfully");
@@ -36,7 +38,7 @@ const borrowBook = async (req, res) => {
             isbn: bookData.industryIdentifiers[0].identifier,
             thumbnail: bookData.imageLinks.thumbnail,
             genre: bookData.categories,
-            availableQuantity: 0, // Since it is being borrowed immediately
+            availableQuantity: 10, // Since it is being borrowed immediately
             user: userId,
             borrowed: true,
             borrowDate: new Date(),
@@ -47,7 +49,7 @@ const borrowBook = async (req, res) => {
 
         // Update user's account
         const user = await User.findById(userId);
-        user.account.borrowed_books.push(newBook._id);
+        user.no_borrowed_books.push(newBook._id);
         await user.save();
 
         res.status(201).send("Book borrowed successfully");

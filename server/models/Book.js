@@ -6,7 +6,7 @@ const bookSchema = new mongoose.Schema({
     isbn: String,
     thumbnail: String,
     genre: [String],
-    availableQuantity: { type: Number, default: 1 },
+    availableQuantity: { type: Number, default: () => 10 },
     user: { 
         type: mongoose.Schema.Types.ObjectId, 
         ref: 'User' 
