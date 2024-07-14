@@ -55,6 +55,10 @@ const userSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Book' 
     }],
+    history_borrowed_books: [{ 
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Book' 
+    }],
     reserved_books: [{ 
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Book' 

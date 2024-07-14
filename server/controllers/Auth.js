@@ -1,9 +1,27 @@
 const bcrypt = require("bcrypt")
 const User = require("../models/User")
 const jwt = require("jsonwebtoken")
+const mailSender = require("../utils/mailSender")
 require("dotenv").config()
 
 // Signup Controller for Registering USers
+
+async function sendVerificationEmail(email) {
+
+	// Send the email
+	try {
+    const title = "Signup Success"
+		const mailResponse = await mailSender(
+			email,
+			title,
+      "You have successfully registered with us."
+		);
+		console.log("Email sent successfully: ", mailResponse.response);
+	} catch (error) {
+		console.log("Error occurred while sending email: ", error);
+		throw error;
+	}
+}
 
 exports.signup = async (req, res) => {
   try {
@@ -48,7 +66,11 @@ exports.signup = async (req, res) => {
       email,
       accountType,
     })
- 
+      // send mail to user
+      // const title = "Login Success"
+      // const body = `Hello ${user.username}, You have successfully logged in.`
+      // mailSender(user.email, title, body);
+      await sendVerificationEmail(user.email)
     return res.status(200).json({
       success: true,
       user,
@@ -110,6 +132,9 @@ exports.login = async (req, res) => {
         expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
         httpOnly: true,
       }
+
+
+
       res.cookie("token", token, options).status(200).json({
         success: true,
         token,

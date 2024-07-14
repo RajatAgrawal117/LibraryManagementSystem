@@ -25,7 +25,7 @@ database.connectDB();
 const userRoutes = require("./routes/user");
 const borrowRoutes = require("./routes/Borrow");
 const getUserRoutes = require("./routes/getUser")
-const bookRoutes = require("./routes/book")
+const bookRoutes = require("./routes/Book");
 app.use("/api/auth", userRoutes);
 app.use("/api", borrowRoutes);
 app.use('/api', getUserRoutes);
