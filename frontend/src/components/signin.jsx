@@ -14,7 +14,7 @@ const Signin = () => {
       const response = await axios.post(`http://localhost:4000/api/auth/login`, {
         username,
         password
-      });
+      }, {  withCredentials: true,});
 
       // Assuming your response contains user data and a token
       const { data } = response;

@@ -8,8 +8,8 @@ const HomeBook = () => {
   const [newArrivals, setNewArrivals] = useState([]);
   const [trending, setTrending] = useState([]);
 
-  const fetchBookDetails = async (isbn) => {
-    const response = await fetch(`  `);
+  const fetchBookDetails = async (bookName) => {
+    const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(bookName)}`);
     const data = await response.json();
     if (data.items && data.items.length > 0) {
       setBookDetails(data.items[0].volumeInfo);
@@ -43,14 +43,12 @@ const HomeBook = () => {
 
   return (
     <div className="home-page">
-    
-
       <div className="search-section">
         <h2>Search the books available in Library</h2>
         <div className="search-bar">
           <input 
             type="text" 
-            placeholder="Enter ISBN number" 
+            placeholder="Enter book name" 
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />

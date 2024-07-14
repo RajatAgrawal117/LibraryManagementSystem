@@ -17,7 +17,7 @@ const UserHome = () => {
     useEffect(() => {
     const fetchBooks = async () => {
       await axios
-        .get("https://www.googleapis.com/books/v1/volumes?q=isbn:9781787123427")
+        .get("https://localhost:4000/api/books")
         .then((res) => {
           setBooks(res.data.items[0].volumeInfo);
           
@@ -36,7 +36,7 @@ const UserHome = () => {
 
     const fetchBorrowedBooks = async () => {
       await axios
-        .get(`http://localhost:5000/borrowedbooks/${user.email}`)
+        .get(`http://localhost:4000/borrowedbooks/${user.email}`)
         .then((res) => {
           setBorrowedBooks(res.data);
           console.log(res.data);
