@@ -7,6 +7,7 @@ import SignIn from './components/signin'
 import Navbar from './components/Navbar'
 import UserHome from './components/UserHome'
 import Search from './components/Search'
+import HomeBook from './components/HomeBook'
 
 function App() {
 
@@ -15,6 +16,7 @@ function App() {
     <BrowserRouter>
     <Navbar />
     <Routes>
+      <Route path="/" element={<HomeBook/>} />
       <Route path="/signin" element={<SignIn />} />
       <Route path="/about" element={<h1>About</h1>} />
       <Route path="/user" element={<UserHome />} />
