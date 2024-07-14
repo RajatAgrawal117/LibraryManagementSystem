@@ -9,8 +9,18 @@ const Book = () => {
   const { id } = useParams();
 
   const [book, setBook] = useState([]);
+  // get user from loccal storage
+  const userData = (localStorage.getItem('user'));
+  console.log(JSON.parse(userData)._id);
 
   const user = useSelector((state) => state.currentUser);
+
+  console.log(book.industryIdentifiers[0].identifier)
+    
+    const borrorData = {  
+        userId : JSON.parse(userData)._id,
+        isbn : book.industryIdentifiers[0].identifier
+    }
 
   const onsubmit = async (e) => {
     e.preventDefault();
@@ -19,8 +29,9 @@ const Book = () => {
     if(isLoggedIn){
         toast.error("Please Login to borrow a book")
     }
+    
 
-    await axios.post("http://localhost:4000/api/borrow").then((res) => {
+    await axios.post("http://localhost:4000/api/borrow",borrorData).then((res) => {
         toast.success("Book borrowed successfully")
         console.log(res);
     }).catch((err) => {
@@ -34,7 +45,7 @@ const Book = () => {
   useEffect(() => {
         const fetchBooks = async () => {
         await axios.get(`https://www.googleapis.com/books/v1/volumes/${id}`).then((data)=>{
-            console.log(data)
+            // console.log(data)
             setBook(data.data.volumeInfo)
         }).catch((err)=>{
             console.log(err)
@@ -45,7 +56,6 @@ const Book = () => {
 
    
   }, []);
-
   return (
     <div className="pt-4">
       <h1 className=" text-3xl font-bold text-left pl-4 pb-3">

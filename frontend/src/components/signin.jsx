@@ -27,8 +27,7 @@ const Signin = () => {
       localStorage.setItem('token', data.token);
       
       // need to add borrowed books to local storage
-      console.log(data.user.borrowed_books);
-      localStorage.setItem('borrowed_books', data.user.borrowed_books);
+      localStorage.setItem('user', JSON.stringify(data.user));
 
       // Redirect to another page if needed
       window.location.href = '/';
