@@ -34,6 +34,8 @@ const Login = () => {
     }
   };
 
+  console.log(user);
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 text-xl">
       <form onSubmit={handleLogin} className="bg-white p-6 rounded-lg shadow-lg w-80">
@@ -60,7 +62,9 @@ const Login = () => {
       </form>
       <div className="mt-6">
         <button className="w-full bg-blue-500 text-white py-2 rounded-md mb-2 hover:bg-blue-600">Signup using Google</button>
+        <Link to="/signup">
         <button className="w-full bg-red-500 text-white py-2 rounded-md hover:bg-red-600">Signup using email address</button>
+        </Link>
       </div>
     </div>
   );
