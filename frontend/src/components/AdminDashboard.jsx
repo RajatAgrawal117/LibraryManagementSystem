@@ -1,4 +1,3 @@
-// src/components/AdminDashboard.js
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
@@ -9,7 +8,17 @@ const AdminDashboard = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get('http://localhost:4000/api/users');
+        const token = localStorage.getItem('token'); // Retrieve the token from localStorage
+        if (!token) {
+          throw new Error("No token found");
+        }
+
+        const response = await axios.get('http://localhost:4000/api/users', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        
         console.log(response);
         setUsers(response.data);
         setLoading(false);

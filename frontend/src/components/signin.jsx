@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-
-const Login = () => {
+import { Link } from 'react-router-dom'
+const Signin = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -34,7 +34,7 @@ const Login = () => {
     }
   };
 
-  console.log(user);
+  
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 text-xl">
@@ -70,4 +70,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Signin;
