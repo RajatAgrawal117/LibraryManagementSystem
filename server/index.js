@@ -4,6 +4,7 @@ const app = express();
 const cors = require("cors");
 const database = require('./config/database') ;
 
+
 const port = process.env.PORT || 4000 ;
 // Middleware
 app.use(express.json()); 
@@ -20,7 +21,12 @@ app.use(
 database.connectDB();
 
 
+//Routes
+const userRoutes = require("./routes/user");
+app.use("/api/auth", userRoutes);
+
+
 // Start the server
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
-});
+});  
