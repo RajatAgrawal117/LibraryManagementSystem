@@ -10,6 +10,8 @@ const UserHome = () => {
   const [books, setBooks] = useState([{}]);
   const [search, setSearch] = useState("");
   const [searchbooks, setSearchBooks] = useState([{}]);
+  
+
   const user = useSelector((state) => state.currentUser);
     useEffect(() => {
     const fetchBooks = async () => {
@@ -27,11 +29,14 @@ const UserHome = () => {
     fetchBooks();
   }, []);
 
-  // const  currentUser  = useSelector((state) => state.currentUser);
-    // console.log(currentUser);
-    console.log(user);
 
-  useEffect(() => {}, [search, books]);
+  useEffect(() => {
+
+    
+
+
+  }, [search, books]);
+  
 
   const handleSearch = (e) => {
     e.preventDefault();

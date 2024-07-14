@@ -10,6 +10,7 @@ const Search = () => {
   const handleSearch = async () => {
     try {
       const response = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${query}`);
+      // console.log(response.data.items);
       setBooks(response.data.items);
     } catch (error) {
       console.error('Error fetching data:', error);
