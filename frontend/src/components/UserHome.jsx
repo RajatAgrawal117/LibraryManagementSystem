@@ -10,6 +10,7 @@ const UserHome = () => {
   const [books, setBooks] = useState([{}]);
   const [search, setSearch] = useState("");
   const [searchbooks, setSearchBooks] = useState([{}]);
+  const [borrowedBooks, setBorrowedBooks] = useState([{}]);
   
 
   const user = useSelector((state) => state.currentUser);
@@ -19,6 +20,7 @@ const UserHome = () => {
         .get("https://www.googleapis.com/books/v1/volumes?q=isbn:9781787123427")
         .then((res) => {
           setBooks(res.data.items[0].volumeInfo);
+          
           // console.log(res);
           // console.log(res.data.items[0].volumeInfo);
         })
@@ -31,6 +33,19 @@ const UserHome = () => {
 
 
   useEffect(() => {
+
+    const fetchBorrowedBooks = async () => {
+      await axios
+        .get(`http://localhost:5000/borrowedbooks/${user.email}`)
+        .then((res) => {
+          setBorrowedBooks(res.data);
+          console.log(res.data);
+        })
+        .catch(() => {
+          console.log("error");
+        });
+    };
+    fetchBorrowedBooks();
 
     
 
