@@ -7,9 +7,6 @@ const HomeBook = () => {
   const [newArrivals, setNewArrivals] = useState([]);
   const [trending, setTrending] = useState([]);
 
-<<<<<<< HEAD
-const HomeBook = ({title,image ,info}) => {
-=======
   const fetchBookDetails = async (isbn) => {
     const response = await fetch(`  `);
     const data = await response.json();
@@ -19,7 +16,6 @@ const HomeBook = ({title,image ,info}) => {
       setBookDetails(null);
     }
   };
->>>>>>> 4e2f551e5e78a003ede1ce2ab69caae0bd02f79b
 
   const fetchNewArrivals = async () => {
     const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=science&orderBy=newest&maxResults=5`);
@@ -45,26 +41,21 @@ const HomeBook = ({title,image ,info}) => {
   };
 
   return (
-<<<<<<< HEAD
-    <div className=' flex  p-3'>
-            <div className=' w-1/2 '>
-           <img src={image} alt="book" className=' h-23 w-auto' />
+    <div className="home-page">
+    
 
-            </div>
-           <div className=' '>
-            <h1 className=' text-xl font-bold'>
-
-           {title}
-            </h1>
-            <p className=' w-full text-sm'>
-                {info.substring(0,350)}
-            </p>
-           </div>
-
-    </div>
-  )
-}
-
+      <div className="search-section">
+        <h2>Search the books available in Library</h2>
+        <div className="search-bar">
+          <input 
+            type="text" 
+            placeholder="Enter ISBN number" 
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          <button onClick={handleSearch}>Search</button>
+        </div>
+      </div>
 
       {bookDetails && (
         <div className="book-details">
