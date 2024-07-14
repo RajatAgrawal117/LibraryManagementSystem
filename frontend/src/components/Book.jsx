@@ -9,10 +9,21 @@ const Book = () => {
   const { id } = useParams();
   const [book, setBook] = useState(null); // Initialize book as null initially
 
-  const user = useSelector((state) => state.currentUser); // Assuming currentUser is properly set in Redux
-  const isLoggedIn = !!localStorage.getItem("token");
+  const [book, setBook] = useState([]);
+  // get user from loccal storage
+  const userData = (localStorage.getItem('user'));
+  console.log(JSON.parse(userData)._id);
 
-  const onSubmit = async (e) => {
+  const user = useSelector((state) => state.currentUser);
+
+  console.log(book.industryIdentifiers[0].identifier)
+    
+    const borrorData = {  
+        userId : JSON.parse(userData)._id,
+        isbn : book.industryIdentifiers[0].identifier
+    }
+
+  const onsubmit = async (e) => {
     e.preventDefault();
 
     if (!isLoggedIn) {
@@ -50,20 +61,33 @@ const Book = () => {
         console.error(err);
       }
     }
-  };
+    
+
+    await axios.post("http://localhost:4000/api/borrow",borrorData).then((res) => {
+        toast.success("Book borrowed successfully")
+        console.log(res);
+    }).catch((err) => {
+        toast.error("Error borrowing book")
+      console.log(err);
+    });
+   
+  }
+
 
   useEffect(() => {
-    const fetchBook = async () => {
-      try {
-        const response = await axios.get(`https://www.googleapis.com/books/v1/volumes/${id}`);
-        setBook(response.data.volumeInfo);
-      } catch (error) {
-        console.error("Error fetching book:", error);
-      }
-    };
-    fetchBook();
-  }, [id]);
+        const fetchBooks = async () => {
+        await axios.get(`https://www.googleapis.com/books/v1/volumes/${id}`).then((data)=>{
+            // console.log(data)
+            setBook(data.data.volumeInfo)
+        }).catch((err)=>{
+            console.log(err)
 
+        })
+    }
+    fetchBooks()
+
+   
+  }, []);
   return (
     <div className="pt-4">
       {book ? (

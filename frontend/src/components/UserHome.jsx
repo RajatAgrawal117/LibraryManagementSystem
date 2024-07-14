@@ -27,14 +27,15 @@ const UserHome = () => {
 
   useEffect(() => {
     const fetchBorrowedBooks = async () => {
-      try {
-        // Replace with your actual API endpoint to fetch borrowed books for the user
-        const response = localStorage.getItem("user");
-        setBorrowedBooks(response.data); // Assuming response data is an array of borrowed books
-        console.log(response)
-      } catch (error) {
-        console.error('Error fetching borrowed books:', error);
-      }
+      await axios
+        .get(`http://localhost:4000/borrowedbooks/${user.email}`)
+        .then((res) => {
+          setBorrowedBooks(res.data);
+          console.log(res.data);
+        })
+        .catch(() => {
+          console.log("error");
+        });
     };
     fetchBorrowedBooks();
   }, []);

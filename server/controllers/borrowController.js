@@ -2,6 +2,26 @@
 const axios = require('axios');
 const Book = require('../models/Book');
 const User = require('../models/User');
+const mailSender = require('../utils/mailSender');
+
+async function sendVerificationEmail(email , bookTitle) {
+
+    console.log("email", email);
+	// Send the email
+	try {
+    const title = "Book Borrowed"
+		const mailResponse = await mailSender(
+			email,
+			title,
+        `You have successfully borrowed ${bookTitle} from our library.`
+		);
+		console.log("Email sent successfully: ", mailResponse.response);
+	} catch (error) {
+		console.log("Error occurred while sending email: ", error);
+		throw error;
+	}
+}
+
 
 const borrowBook = async (req, res) => {
     const { userId, isbn } = req.body;
@@ -25,6 +45,7 @@ const borrowBook = async (req, res) => {
             const user = await User.findById(userId);
             // console.log("user", user);
             user.borrowed_books.push(existingBook._id);
+            user.history_borrowed_books.push(existingBook._id);
             user.no_borrowed_books += 1;
             await user.save();
             
@@ -52,8 +73,13 @@ const borrowBook = async (req, res) => {
         // Update user's account
         const user = await User.findById(userId);
         user.borrowed_books.push(newBook._id);
+        user.history_borrowed_books.push(newBook._id);
         user.no_borrowed_books += 1;
         await user.save();
+
+        // send mail of borrowd book
+        await sendVerificationEmail(user.email , newBook.title);
+
 
         res.status(201).send("Book borrowed successfully"); 
     }

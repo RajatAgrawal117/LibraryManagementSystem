@@ -19,7 +19,7 @@ const Signin = () => {
       const response = await axios.post(`http://localhost:4000/api/auth/login`, {
         username,
         password
-      });
+      }, );
 
       // Assuming your response contains user data and a token
       const { data } = response;
@@ -27,16 +27,10 @@ const Signin = () => {
       // Handle successful login here
       console.log('Login successful:', data);
 
-      const user = {
-        username
-      };
-
-      dispatch(signInSuccess(user)); // Dispatch action here
 
       // Store token and user data in localStorage
       localStorage.setItem('token', data.token);
-      localStorage.setItem('user', JSON.stringify(data.user));
-
+      
       // Redirect to another page if needed
       window.location.href = '/';
     } catch (err) {
