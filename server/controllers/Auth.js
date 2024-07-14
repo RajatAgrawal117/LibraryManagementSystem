@@ -81,8 +81,7 @@ exports.login = async (req, res) => {
 
     // check if user exists in db
     // Find user with provided email
-    const user = await User.findOne({ username }).populate("account")
-
+    const user = await User.findOne({ username });
     // If user not found with provided email
     if (!user) {
       // Return 401 Unauthorized status code with error message
