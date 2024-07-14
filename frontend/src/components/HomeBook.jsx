@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './HomeBook.css';
+import { Link } from 'react-router-dom';
 
 const HomeBook = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -70,6 +71,8 @@ const HomeBook = () => {
           <ul>
             {newArrivals.map((book) => (
               <li key={book.id}>
+                          <Link to={`/book/${book.id}`}>
+
                 {book.volumeInfo.imageLinks && (
                   <img src={book.volumeInfo.imageLinks.thumbnail} alt={book.volumeInfo.title} />
                 )}
@@ -78,6 +81,7 @@ const HomeBook = () => {
                   <p>{book.volumeInfo.authors && book.volumeInfo.authors.join(', ')}</p>
                   <p>{book.volumeInfo.publishedDate}</p>
                 </div>
+                </Link>
               </li>
             ))}
           </ul>
@@ -88,6 +92,8 @@ const HomeBook = () => {
           <ul>
             {trending.map((book) => (
               <li key={book.id}>
+                                          <Link to={`/book/${book.id}`}>
+
                 {book.volumeInfo.imageLinks && (
                   <img src={book.volumeInfo.imageLinks.thumbnail} alt={book.volumeInfo.title} />
                 )}
@@ -96,6 +102,7 @@ const HomeBook = () => {
                   <p>{book.volumeInfo.authors && book.volumeInfo.authors.join(', ')}</p>
                   <p>{book.volumeInfo.publishedDate}</p>
                 </div>
+                </Link>
               </li>
             ))}
           </ul>
