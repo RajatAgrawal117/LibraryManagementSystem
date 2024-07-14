@@ -21,10 +21,14 @@ const Signin = () => {
 
       // Handle successful login here (e.g., store the token, redirect user, etc.)
       console.log('Login successful:', data);
-
+      
 
       // For example, you could store the token in localStorage
       localStorage.setItem('token', data.token);
+      
+      // need to add borrowed books to local storage
+      console.log(data.user.borrowed_books);
+      localStorage.setItem('borrowed_books', data.user.borrowed_books);
 
       // Redirect to another page if needed
       window.location.href = '/';
