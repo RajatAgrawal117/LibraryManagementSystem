@@ -25,10 +25,10 @@ database.connectDB();
 const userRoutes = require("./routes/user");
 const borrowRoutes = require("./routes/Borrow");
 const getUserRoutes = require("./routes/getUser")
-const bookRoutes = require("./routes/Book");
+const bookRoutes = require("./routes/Book")
 app.use("/api/auth", userRoutes);
 app.use("/api", borrowRoutes);
-app.use('/api', getUserRoutes);
+app.use('/api/users', getUserRoutes);
 app.use('/api', bookRoutes);
 
 // Start the server
