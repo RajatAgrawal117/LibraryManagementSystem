@@ -23,7 +23,8 @@ const borrowBook = async (req, res) => {
             
             const user = await User.findById(userId);
             console.log("user", user);
-            user.no_borrowed_books.push(existingBook._id);
+            user.borrowed_books.push(existingBook._id);
+            user.no_borrowed_books += 1;
             await user.save();
             
             res.status(201).send("Book borrowed successfully");
