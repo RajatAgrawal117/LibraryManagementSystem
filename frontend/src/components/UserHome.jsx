@@ -1,61 +1,48 @@
-import { Home } from "@mui/icons-material";
-import React, { useEffect, useState } from "react";
-import HomeBook from "./HomeBook";
-import axios from "axios";
-import MyBooks from "./myBooks";
-import { useSelector } from "react-redux";
-import {getuser} from "../store/userSlice"
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import myBooks from './myBooks'; // Assuming you have a component for displaying individual books
+import { useSelector } from 'react-redux';
 
 const UserHome = () => {
-  const [books, setBooks] = useState([{}]);
-  const [search, setSearch] = useState("");
-  const [searchbooks, setSearchBooks] = useState([{}]);
-  const [borrowedBooks, setBorrowedBooks] = useState([{}]);
-  
+  const [books, setBooks] = useState([]);
+  const [search, setSearch] = useState('');
+  const [searchbooks, setSearchBooks] = useState([]);
+  const [borrowedBooks, setBorrowedBooks] = useState([]);
 
+  // Fetching user data from Redux state
   const user = useSelector((state) => state.currentUser);
-    useEffect(() => {
+
+  useEffect(() => {
     const fetchBooks = async () => {
-      await axios
-        .get("https://localhost:4000/api/books")
-        .then((res) => {
-          setBooks(res.data.items[0].volumeInfo);
-          
-          // console.log(res);
-          // console.log(res.data.items[0].volumeInfo);
-        })
-        .catch(() => {
-          console.log("error");
-        });
+      try {
+        const response = await axios.get('http://localhost:4000/api/books');
+        setBooks(response.data.items); // Assuming response structure has an items array
+        console.log(borrowedBooks)
+      } catch (error) {
+        console.error('Error fetching books:', error);
+      }
     };
     fetchBooks();
   }, []);
 
-
   useEffect(() => {
-
     const fetchBorrowedBooks = async () => {
-      await axios
-        .get(`http://localhost:5000/borrowedbooks/${user.email}`)
-        .then((res) => {
-          setBorrowedBooks(res.data);
-          console.log(res.data);
-        })
-        .catch(() => {
-          console.log("error");
-        });
+      try {
+        // Replace with your actual API endpoint to fetch borrowed books for the user
+        const response = localStorage.getItem("user");
+        setBorrowedBooks(response.data); // Assuming response data is an array of borrowed books
+        console.log(response)
+      } catch (error) {
+        console.error('Error fetching borrowed books:', error);
+      }
     };
     fetchBorrowedBooks();
-
-    
-
-
-  }, [search, books]);
-  
+  }, []);
 
   const handleSearch = (e) => {
     e.preventDefault();
     setSearch(e.target.value);
+    // Add your search logic here if needed
   };
 
   return (
@@ -81,28 +68,27 @@ const UserHome = () => {
             <div className=" pl-2">
               <h1 className=" text text-3xl py-2">My Books</h1>
               <div className=" border-black border-2  " />
+              {borrowedBooks.map((book) => (
+                <myBooks
+                  key={book._id}
+                  title={book.title}
+                  image={book.thumbnail}
+                  info={book.description}
+                />
+              ))}
             </div>
-            {books.title && (
-              <MyBooks
-                title={books.title}
-                image={books.imageLinks.smallThumbnail}
-                info={books.description}
-              />
-            )}
           </div>
           <div className=" w-1/2 pr-2">
             <h1 className=" text text-3xl">User Profile</h1>
             <div className=" border-black border-2  " />
             <div>
-                <h1 className=" text text-2xl">Name: John Doe</h1>
-                <h1 className=" text text-2xl">Email:<span> p1@gmail</span></h1>
-                
+              <h1 className=" text text-2xl">Name: {user.username}</h1>
+              <h1 className=" text text-2xl">Email: <span>{user.email}</span></h1>
+              {/* Add more user details as needed */}
             </div>
           </div>
         </div>
-
- 
-    </div>
+      </div>
     </div>
   );
 };

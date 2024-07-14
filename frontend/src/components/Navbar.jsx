@@ -31,7 +31,7 @@ const Navbar = () => {
         <Link to="/User" className="p-4 align-middle">
           User{" "}
         </Link>
-
+        
         <Link to="/" className="p-4 align-middle">
           Home
         </Link>

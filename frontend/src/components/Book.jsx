@@ -9,12 +9,12 @@ const Book = () => {
   const { id } = useParams();
   const [book, setBook] = useState(null); // Initialize book as null initially
 
-  const user = useSelector((state) => state.currentUser);
+  const user = useSelector((state) => state.currentUser); // Assuming currentUser is properly set in Redux
   const isLoggedIn = !!localStorage.getItem("token");
 
   const onSubmit = async (e) => {
     e.preventDefault();
-  
+
     if (!isLoggedIn) {
       toast.error("Please Login to borrow a book");
     } else {
@@ -23,29 +23,34 @@ const Book = () => {
           toast.error("User information not available");
           return;
         }
-  
+
         const config = {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`, // Include token in the request headers
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         };
-  
-        // Assuming book is structured with an array of borrowed_books
-        const borrowData = {
-          userId: user._id, // Ensure user._id is accessed only when user is valid
-          isbn: book.borrowed_books[0].isbn, // Adjust this based on your actual book structure
-        };
-  
+
+        // Assuming borrowData is structured correctly from localStorage
+        const borrowData = JSON.parse(localStorage.getItem("user")); // Parse the stored string into an object
+
+        // Ensure borrowData contains necessary fields like userId
+        if (!borrowData._id) {
+          toast.error("User information not available in localStorage");
+          return;
+        }
+
+        // Add bookId to borrowData
+        borrowData.bookId = id;
+
         const res = await axios.post("http://localhost:4000/api/borrow", borrowData, config);
         toast.success("Book borrowed successfully");
-        console.log(res);
+        console.log(res.data); // Assuming you want to log the response data
       } catch (err) {
         toast.error("Error borrowing book");
         console.error(err);
       }
     }
   };
-  
 
   useEffect(() => {
     const fetchBook = async () => {
@@ -57,7 +62,7 @@ const Book = () => {
       }
     };
     fetchBook();
-  }, [id]); // Add id to dependencies of useEffect to re-fetch book when id changes
+  }, [id]);
 
   return (
     <div className="pt-4">

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState,useEffect } from 'react';
 import './HomeBook.css';
 import { Link } from 'react-router-dom';
 
@@ -7,6 +7,7 @@ const HomeBook = () => {
   const [bookDetails, setBookDetails] = useState(null);
   const [newArrivals, setNewArrivals] = useState([]);
   const [trending, setTrending] = useState([]);
+  
 
   const fetchBookDetails = async (bookName) => {
     const response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(bookName)}`);
@@ -30,16 +31,16 @@ const HomeBook = () => {
     setTrending(data.items || []);
   };
 
+  const handleSearch = () => {
+    if (searchTerm) {
+      history.push(`/search?q=${encodeURIComponent(searchTerm)}`); // Redirect to search page with query
+    }
+  };
+
   useEffect(() => {
     fetchNewArrivals();
     fetchTrending();
   }, []);
-
-  const handleSearch = () => {
-    if (searchTerm) {
-      fetchBookDetails(searchTerm);
-    }
-  };
 
   return (
     <div className="home-page">
@@ -52,7 +53,9 @@ const HomeBook = () => {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
-          <button onClick={handleSearch}>Search</button>
+          <Link to={`/search?q=${encodeURIComponent(searchTerm)}`} className="search-button">
+            Search
+          </Link>
         </div>
       </div>
 
@@ -71,16 +74,15 @@ const HomeBook = () => {
           <ul>
             {newArrivals.map((book) => (
               <li key={book.id}>
-                          <Link to={`/book/${book.id}`}>
-
-                {book.volumeInfo.imageLinks && (
-                  <img src={book.volumeInfo.imageLinks.thumbnail} alt={book.volumeInfo.title} />
-                )}
-                <div>
-                  <h3>{book.volumeInfo.title}</h3>
-                  <p>{book.volumeInfo.authors && book.volumeInfo.authors.join(', ')}</p>
-                  <p>{book.volumeInfo.publishedDate}</p>
-                </div>
+                <Link to={`/book/${book.id}`}>
+                  {book.volumeInfo.imageLinks && (
+                    <img src={book.volumeInfo.imageLinks.thumbnail} alt={book.volumeInfo.title} />
+                  )}
+                  <div>
+                    <h3>{book.volumeInfo.title}</h3>
+                    <p>{book.volumeInfo.authors && book.volumeInfo.authors.join(', ')}</p>
+                    <p>{book.volumeInfo.publishedDate}</p>
+                  </div>
                 </Link>
               </li>
             ))}
@@ -92,16 +94,15 @@ const HomeBook = () => {
           <ul>
             {trending.map((book) => (
               <li key={book.id}>
-                                          <Link to={`/book/${book.id}`}>
-
-                {book.volumeInfo.imageLinks && (
-                  <img src={book.volumeInfo.imageLinks.thumbnail} alt={book.volumeInfo.title} />
-                )}
-                <div>
-                  <h3>{book.volumeInfo.title}</h3>
-                  <p>{book.volumeInfo.authors && book.volumeInfo.authors.join(', ')}</p>
-                  <p>{book.volumeInfo.publishedDate}</p>
-                </div>
+                <Link to={`/book/${book.id}`}>
+                  {book.volumeInfo.imageLinks && (
+                    <img src={book.volumeInfo.imageLinks.thumbnail} alt={book.volumeInfo.title} />
+                  )}
+                  <div>
+                    <h3>{book.volumeInfo.title}</h3>
+                    <p>{book.volumeInfo.authors && book.volumeInfo.authors.join(', ')}</p>
+                    <p>{book.volumeInfo.publishedDate}</p>
+                  </div>
                 </Link>
               </li>
             ))}

@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom'
+import { useDispatch } from 'react-redux';
+import { signInSuccess } from '../store/userSlice';
+
 const Signin = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+
+  const dispatch = useDispatch(); // Correct usage of useDispatch
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -19,22 +24,26 @@ const Signin = () => {
       // Assuming your response contains user data and a token
       const { data } = response;
 
-      // Handle successful login here (e.g., store the token, redirect user, etc.)
+      // Handle successful login here
       console.log('Login successful:', data);
 
+      const user = {
+        username
+      };
 
-      // For example, you could store the token in localStorage
+      dispatch(signInSuccess(user)); // Dispatch action here
+
+      // Store token and user data in localStorage
       localStorage.setItem('token', data.token);
       localStorage.setItem('user', JSON.stringify(data.user));
+
       // Redirect to another page if needed
       window.location.href = '/';
     } catch (err) {
-      console.log(err)
+      console.error('Login error:', err);
       setError(err?.response?.data?.message || 'Login failed. Please try again.');
     }
   };
-
-  
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 text-xl">
@@ -63,7 +72,7 @@ const Signin = () => {
       <div className="mt-6">
         <button className="w-full bg-blue-500 text-white py-2 rounded-md mb-2 hover:bg-blue-600">Signup using Google</button>
         <Link to="/signup">
-        <button className="w-full bg-red-500 text-white py-2 rounded-md hover:bg-red-600">Signup using email address</button>
+          <button className="w-full bg-red-500 text-white py-2 rounded-md hover:bg-red-600">Signup using email address</button>
         </Link>
       </div>
     </div>
