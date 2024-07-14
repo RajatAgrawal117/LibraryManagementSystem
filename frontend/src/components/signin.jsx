@@ -25,7 +25,7 @@ const Signin = () => {
 
       // For example, you could store the token in localStorage
       localStorage.setItem('token', data.token);
-
+      
       // Redirect to another page if needed
       window.location.href = '/';
     } catch (err) {

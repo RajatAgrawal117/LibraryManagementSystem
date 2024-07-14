@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-
+const isLoggedIn = !!localStorage.getItem('token');
 const Book = () => {
   const { id } = useParams();
 
@@ -16,7 +16,7 @@ const Book = () => {
     e.preventDefault();
     console.log(user);
 
-    if(!user){
+    if(isLoggedIn){
         toast.error("Please Login to borrow a book")
     }
 
